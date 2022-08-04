@@ -1,12 +1,11 @@
+// Dependencies
 import { Router } from 'express';
+
+// Controllers
+import TestController from '../controllers/test-controller';
 
 const router = Router();
 
-router.post('/test', (req, res) => {
-    console.log("Test Used")
-    res.json({
-        message: 'Hello World'
-    })
-});
+router.post('/test', TestController.perform);
 
 export default router;
