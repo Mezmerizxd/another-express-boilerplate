@@ -9,7 +9,6 @@ import NativeEvent from './exceptions/NativeEvent';
 // Providers
 import App from "./providers/App";
 
-// setup cluster
 if (cluster.isPrimary) {
     NativeEvent.process();
     const CPUS: any = os.cpus();
