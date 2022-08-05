@@ -96,7 +96,22 @@ class Statics {
                 );
             }
         } catch (error) {
-            Log.error(`[Statics] ${error}`);
+            try {
+                Log.info(
+                    `[Statics] Deleting ${
+                        Config.config().githubRepoName
+                    } repository...`
+                );
+                exec.execSync(
+                    `cd ${path.join(__dirname, '../../build')} && rm -rf ${
+                        Config.config().githubRepoName
+                    }`
+                );
+                this.installFromGithubBranch();
+            } catch (error) {
+                Log.error(`[Statics] ${error}`);
+                return;
+            }
         }
     }
 }
