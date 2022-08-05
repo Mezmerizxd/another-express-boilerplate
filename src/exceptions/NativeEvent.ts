@@ -3,39 +3,31 @@ import Log from '../middlewares/Log';
 
 class NativeEvent {
     public cluster(_cluster): void {
-        _cluster.on('online', (worker) => {
-            Log.info(`Worker ${worker.id} is online`);
-        }).on('listening', (worker, address) => {
-            Log.info(`Worker ${worker.id} is listening on ${address.address}:${address.port}`);
-        }).on('exit', (worker, code, signal) => {
-            Log.info(`Worker ${worker.id} died with code: ${code} and signal: ${signal}`);
-            Log.info(`Starting a new worker`);
+        // Catch the cluster's listening port
+        _cluster.on('listening', (worker: any, address: any) => {
+            Log.info(
+                `[NativeEvent] Worker ${worker.process.pid} is listening on port ${address.port}`
+            );
+        });
+        // Catch the cluster when it is back online
+        _cluster.on('online', (worker: any) => {
+            Log.info(
+                `[NativeEvent] Worker ${worker.process.pid} is online`
+            );
+        });
+        // Catch the cluster when it goes offline
+        _cluster.on('offline', (worker: any) => {
+            Log.info(
+                `[NativeEvent] Worker ${worker.process.pid} is offline`
+            );
+        });
+        // Catch the cluster when it is exiting
+        _cluster.on('exit', (worker: any, code: any, signal: any) => {
+            Log.info(
+                `[NativeEvent] Worker ${worker.process.pid} is exiting with code ${code} and signal ${signal}`
+            );
             _cluster.fork();
-        }).on('disconnect', (worker) => {
-            Log.info(`Worker ${worker.id} disconnected`);
-        }).on('fork', (worker) => {
-            Log.info(`Worker ${worker.id} forked`);
-        }).on('listening', (worker, address) => {
-            Log.info(`Worker ${worker.id} is listening on ${address.address}:${address.port}`);
-        }).on('message', (worker, message, handle) => {
-            Log.info(`Worker ${worker.id} sent a message: ${message}`);
-        }).on('online', (worker) => {
-            Log.info(`Worker ${worker.id} is online`);
-        }).on('setup', (worker) => {
-            Log.info(`Worker ${worker.id} setup`);
-        }).on('stopping', (worker, timeout, callback) => {
-            Log.info(`Worker ${worker.id} stopping`);
-        }).on('stopped', (worker) => {
-            Log.info(`Worker ${worker.id} stopped`);
-        }).on('SIGINT', () => {
-            Log.info('SIGINT received.');
-            _cluster.disconnect(() => {
-                Log.info('disconnect event');
-                process.exit(0);
-            }).kill(() => {
-                Log.info('kill event');
-                process.exit(0);
-        })})
+        });
     }
 
     public process (): void {
