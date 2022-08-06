@@ -12,7 +12,7 @@ class MySql {
     connected: boolean;
 
     constructor() {
-        if (Config.config().useMySql === true) {
+        if (Config.config().useMySql === 'true') {
             // Create the connection
             this.connection = mysql.createConnection({
                 host: Config.config().mysqlHost,
@@ -34,7 +34,7 @@ class MySql {
     }
 
     public async Query(query: string, callback?: (results: any) => void) {
-        if (Config.config().useMySql === true) {
+        if (Config.config().useMySql === 'true') {
             // Execute the query
             this.connection.execute(query, (err: any, results: any) => {
                 if (err) {
@@ -53,7 +53,7 @@ class MySql {
         params: any,
         callback?: (results: any) => void
     ) {
-        if (Config.config().useMySql === true) {
+        if (Config.config().useMySql === 'true') {
             // Execute the query
             this.connection.execute(query, params, (err: any, results: any) => {
                 if (err) {
@@ -68,7 +68,7 @@ class MySql {
     }
 
     public warmup(): void {
-        if (Config.config().useMySql === true) {
+        if (Config.config().useMySql === 'true') {
             // Warmup the database
             Log.info(`[MySql] Warming up...`);
             // Verify the connection is alive

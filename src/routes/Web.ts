@@ -9,7 +9,7 @@ router.get('/*', (req, res) => {
     res.sendFile(
         path.join(
             __dirname,
-            Config.config().useGithub === true
+            Config.config().useGithub === 'true'
                 ? `../../build/${Config.config().githubRepoName}/index.html`
                 : '../../demo/index.html'
         )

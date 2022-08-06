@@ -18,7 +18,7 @@ class Statics {
             express.static(
                 path.join(
                     __dirname,
-                    Config.config().useGithub === true
+                    Config.config().useGithub === 'true'
                         ? `../../build/${Config.config().githubRepoName}`
                         : '../../demo'
                 )
@@ -29,7 +29,7 @@ class Statics {
 
     private static Initialize(): void {
         // Install/Update the static web repository
-        if (Config.config().useGithub === true) {
+        if (Config.config().useGithub === 'true') {
             this.installFromGithubBranch();
         }
     }

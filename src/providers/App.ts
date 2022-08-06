@@ -1,6 +1,6 @@
 // Providers
-import Express from "./Express";
-import MySql from "./MySql";
+import Express from './Express';
+import MySql from './MySql';
 
 class App {
     public startServer(): void {

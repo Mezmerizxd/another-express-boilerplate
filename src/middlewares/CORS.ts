@@ -14,7 +14,7 @@ class CORS {
             optionsSuccessStatus: 200, // Some legacy browsers choke on 204
         };
 
-        if (Config.config().isCORSEnabled) {
+        if (Config.config().isCORSEnabled === 'true') {
             //_express.use(cors(options));
             _express.use(cors());
         }

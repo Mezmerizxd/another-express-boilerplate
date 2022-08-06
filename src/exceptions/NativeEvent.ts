@@ -11,15 +11,11 @@ class NativeEvent {
         });
         // Catch the cluster when it is back online
         _cluster.on('online', (worker: any) => {
-            Log.info(
-                `[NativeEvent] Worker ${worker.process.pid} is online`
-            );
+            Log.info(`[NativeEvent] Worker ${worker.process.pid} is online`);
         });
         // Catch the cluster when it goes offline
         _cluster.on('offline', (worker: any) => {
-            Log.info(
-                `[NativeEvent] Worker ${worker.process.pid} is offline`
-            );
+            Log.info(`[NativeEvent] Worker ${worker.process.pid} is offline`);
         });
         // Catch the cluster when it is exiting
         _cluster.on('exit', (worker: any, code: any, signal: any) => {
@@ -30,16 +26,14 @@ class NativeEvent {
         });
     }
 
-    public process (): void {
-		// Catch the Process's uncaught-exception
-		process.on('uncaughtException', (exception: any) =>
-			Log.error(exception.stack)
-		);
+    public process(): void {
+        // Catch the Process's uncaught-exception
+        process.on('uncaughtException', (exception: any) =>
+            Log.error(exception.stack)
+        );
 
-		// Catch the Process's warning event
-		process.on('warning', (warning: any) =>
-			Log.warn(warning.stack)
-		);
-	}
+        // Catch the Process's warning event
+        process.on('warning', (warning: any) => Log.warn(warning.stack));
+    }
 }
-export default new NativeEvent;
+export default new NativeEvent();

@@ -11,6 +11,7 @@ export class Config {
         dotenv.config({ path: path.join(__dirname, '../../.env') });
         const url = process.env.APP_URL || `http://localhost:3000`;
         const port = process.env.PORT || 3000;
+        const useCluster = process.env.USE_CLUSTER || false;
 
         const name = process.env.APP_NAME || 'App Name';
         const year = new Date().getFullYear();
@@ -18,11 +19,11 @@ export class Config {
         const company = process.env.COMPANY_NAME || 'App Name';
         const description = process.env.APP_DESCRIPTION || 'About Me!';
 
-        const isCORSEnabled = process.env.CORS_ENABLED || true;
+        const isCORSEnabled = process.env.CORS_ENABLED || 'true';
         const apiPrefix = process.env.API_PREFIX || 'api';
 
-        const useGithub = process.env.USE_GITHUB || false;
-        if (useGithub) {
+        const useGithub = process.env.USE_GITHUB || 'false';
+        if (useGithub === 'true') {
             if (
                 !process.env.GITHUB_USERNAME ||
                 !process.env.GITHUB_PRIVATE_KEY ||
@@ -42,8 +43,8 @@ export class Config {
         const githubRepoBranch = process.env.GITHUB_REPO_BRANCH || 'gh-pages';
         const staticWebRepoUrl = `https://${githubUsername}:${githubPrivateKey}@github.com/${githubRepoOwner}/${githubRepoName}`;
 
-        const useMySql = process.env.USE_MYSQL || false;
-        if (useMySql) {
+        const useMySql = process.env.USE_MYSQL || 'false';
+        if (useMySql === 'true') {
             if (!process.env.MYSQL_HOST) {
                 Log.error(
                     'MySQL credentials are not set! Make a .env file with the following variables: MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE'
@@ -55,6 +56,18 @@ export class Config {
         const mysqlUser = process.env.MYSQL_USER || 'root';
         const mysqlPassword = process.env.MYSQL_PASSWORD || 'root';
         const mysqlDatabase = process.env.MYSQL_DATABASE || 'node_app_db';
+
+        const useMongoDb = process.env.USE_MONGODB || 'false';
+        if (useMongoDb === 'true') {
+            if (!process.env.MONGODB_HOST) {
+                Log.error(
+                    'MongoDB credentials are not set! Make a .env file with the following variables: MONGODB_HOST'
+                );
+                process.exit(1);
+            }
+        }
+        const mongoDbHost = process.env.MONGODB_HOST;
+        const mongoDbDatabase = process.env.MONGODB_DATABASE || 'node_app_db';
 
         return {
             apiPrefix,
@@ -75,6 +88,10 @@ export class Config {
             mysqlUser,
             mysqlPassword,
             mysqlDatabase,
+            useMongoDb,
+            mongoDbHost,
+            mongoDbDatabase,
+            useCluster,
         };
     }
 
@@ -84,7 +101,6 @@ export class Config {
     }
 }
 
-export enum MySqlTables {
-    userAccounts = 'userAccounts',
-    test = 'test',
-}
+export enum MySqlTables {}
+
+export enum MongoDb {}

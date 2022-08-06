@@ -12,7 +12,7 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 3001 5550
+EXPOSE 3000 5550
 
 #Build to project
 RUN yarn build
