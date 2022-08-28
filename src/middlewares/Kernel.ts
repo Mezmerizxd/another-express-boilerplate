@@ -7,9 +7,12 @@ import CORS from './CORS';
 import Http from './Http';
 import Log from './Log';
 
+// Providers
+import { Config } from '../providers/Config';
+
 class Kernal {
     public static Initialize(_express: Application): Application {
-        Log.info('[Kernal] Initializing...');
+        Log.info(`[Kernal] Mezmerizxd Server v${Config.config().mezmerizxdServerVersion} Initializing...`);
 
         Log.info('[Kernal] Mounting Statics...');
         _express = Statics.mount(_express);

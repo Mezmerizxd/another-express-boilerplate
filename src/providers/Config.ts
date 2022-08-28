@@ -9,6 +9,7 @@ import Log from '../middlewares/Log';
 export class Config {
     public static config(): any {
         dotenv.config({ path: path.join(__dirname, '../../.env') });
+        const mezmerizxdServerVersion = process.env.MEZMERIZXD_SERVER_VERSION;
         const url = process.env.APP_URL || `http://localhost:3000`;
         const port = process.env.PORT || 3000;
         const useCluster = process.env.USE_CLUSTER || false;
@@ -41,7 +42,12 @@ export class Config {
         const githubRepoOwner = process.env.GITHUB_REPO_OWNER;
         const githubRepoName = process.env.GITHUB_REPO_NAME;
         const githubRepoBranch = process.env.GITHUB_REPO_BRANCH || 'gh-pages';
-        const staticWebRepoUrl = `https://${githubUsername}:${githubPrivateKey}@github.com/${githubRepoOwner}/${githubRepoName}`;
+        let staticWebRepoUrl = "";
+        if (process.env.GITHUB_IS_PRIVATE === "true") {
+            staticWebRepoUrl = `https://${githubUsername}:${githubPrivateKey}@github.com/${githubRepoOwner}/${githubRepoName}`;
+        }else {
+            staticWebRepoUrl = `https://github.com/${githubRepoOwner}/${githubRepoName}`;
+        }
 
         const useMySql = process.env.USE_MYSQL || 'false';
         if (useMySql === 'true') {
@@ -70,6 +76,7 @@ export class Config {
         const mongoDbDatabase = process.env.MONGODB_DATABASE || 'node_app_db';
 
         return {
+            mezmerizxdServerVersion,
             apiPrefix,
             company,
             copyright,
