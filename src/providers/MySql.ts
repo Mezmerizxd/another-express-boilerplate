@@ -1,5 +1,6 @@
 // Dependencies
 import * as mysql from 'mysql2';
+import * as util from 'util';
 
 // Middlewares
 import Log from '../middlewares/Log';
@@ -35,16 +36,32 @@ class MySql {
 
     public async Query(query: string, callback?: (results: any) => void) {
         if (Config.config().useMySql === 'true') {
-            // Execute the query
-            this.connection.execute(query, (err: any, results: any) => {
-                if (err) {
-                    Log.error(`[MySql] Query Error: ${err.message}`);
-                    return;
-                }
-                if (callback) callback(results);
-                return results;
-            });
-            return "MySql isn't enabled";
+            try {
+                this.connection.execute(query, (err: any, results: any) => {
+                    if (err) {
+                        Log.error(`[MySql] Query Error: ${err.message}`);
+                        return;
+                    }
+                    if (callback) callback(results);
+                    return results;
+                });
+            } catch (error) {
+                Log.error(error);
+            }
+        }
+    }
+
+    public async QueryAsync(queryparam: string) {
+        if (Config.config().useMySql === 'true') {
+            try {
+                const promisql = util
+                    .promisify(this.connection.query)
+                    .bind(this.connection);
+                const result = promisql(queryparam);
+                return result;
+            } catch (error) {
+                Log.error(error);
+            }
         }
     }
 
