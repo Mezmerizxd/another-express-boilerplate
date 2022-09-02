@@ -1,10 +1,13 @@
 // Dependencies
 import * as express from 'express';
+import * as http from 'http';
+import * as socketio from "socket.io";
 
 // Providers
 import Routes from './Routes';
 import { Config } from './Config';
 import MySql from './MySql';
+import Socket from "./Sockets";
 
 // Middlewares
 import Kernal from '../middlewares/Kernel';
@@ -12,9 +15,15 @@ import Log from '../middlewares/Log';
 
 class Express {
     public express: express.Application;
+    public httpServer: any;
+    public io: any;
 
     constructor() {
         this.express = express();
+
+        this.startHttp();
+        this.startSocketIO();
+
         // Get the environment variables
         this.mountDotEnv();
         // Mount the middlewares
@@ -23,6 +32,7 @@ class Express {
         this.mountRoutes();
         // Initialize the database
         MySql.warmup();
+        //this.socketServer.init();
     }
 
     private mountDotEnv(): void {
@@ -41,12 +51,20 @@ class Express {
         this.express = Routes.mountApi(this.express, express);
     }
 
+    private startHttp(): void {
+        this.httpServer = new http.Server(this.express);
+    }
+
+    private startSocketIO(): void {
+        this.io = new socketio.Server(this.httpServer, {cors: { origin: '*', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' }});
+        new Socket(this.io);
+    }
+
     public Initialize(): any {
-        // Return the express application
-        this.express
+        this.httpServer
             .listen(Config.config().port, () => {
                 Log.debug(
-                    `Server running on http://localhost:${
+                    `[Server] running on http://localhost:${
                         Config.config().port
                     }`,
                     false
