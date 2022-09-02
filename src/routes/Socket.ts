@@ -1,9 +1,10 @@
-// Middlewares
-import Log from "../middlewares/Log";
+// Dependencies
+import * as socketio from "socket.io";
 
-function Socket(socket: any): void {
-    socket.on('disconnect', () => {
-        Log.debug("[Socket] Connection closed.");
-    })
+// Controllers
+import TestController from "../controllers/test-controller";
+
+function Socket(socket: socketio.Socket): void {
+    socket.on("disconnect", TestController.socket);
 }
 export default Socket;

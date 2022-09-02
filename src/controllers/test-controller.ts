@@ -20,6 +20,10 @@ class TestController {
         });
         Log.debug('[Controllers] TestController is done');
     }
+
+    public static socket(): void {
+        Log.debug("[Socket] Connection closed.");
+    }
 }
 
 export default TestController;

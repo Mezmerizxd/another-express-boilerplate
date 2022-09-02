@@ -15,8 +15,8 @@ import Log from '../middlewares/Log';
 
 class Express {
     public express: express.Application;
-    public httpServer: any;
-    public io: any;
+    public httpServer: http.Server;
+    public io: socketio.Server;
 
     constructor() {
         this.express = express();
