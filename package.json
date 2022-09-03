@@ -1,8 +1,8 @@
 {
-    "name": "mezmerizxd-server",
-    "version": "1.0.3",
+    "name": "another-express-boilerplate",
+    "version": "1.0.4",
     "author": "Rory Pearson (Mezmerizxd)",
-    "description": "Server",
+    "description": "another-express-boilerplate",
     "license": "MIT",
     "main": "dist",
     "scripts": {

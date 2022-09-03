@@ -8,8 +8,8 @@
 ### Install repository from GitHub
 
 ```bash
-$ git clone https://github.com/mezmerizxd/mezmerizxd-server.git
-$ cd mezmerizxd-server
+$ git clone https://github.com/mezmerizxd/another-express-boilerplate.git
+$ cd another-express-boilerplate
 ```
 
 ### Install dependencies

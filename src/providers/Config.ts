@@ -9,7 +9,7 @@ import Log from '../middlewares/Log';
 export class Config {
     public static config(): any {
         dotenv.config({ path: path.join(__dirname, '../../.env') });
-        const mezmerizxdServerVersion = process.env.MEZMERIZXD_SERVER_VERSION;
+        const anotherExpressBoilerplateVersion = process.env.ANOTHER_EXPRESS_BOILERPLATE_VERSION;
         const url = process.env.APP_URL || `http://localhost:3000`;
         const port = process.env.PORT || 3000;
         const useCluster = process.env.USE_CLUSTER || false;
@@ -76,7 +76,7 @@ export class Config {
         const mongoDbDatabase = process.env.MONGODB_DATABASE || 'node_app_db';
 
         return {
-            mezmerizxdServerVersion,
+            anotherExpressBoilerplateVersion,
             apiPrefix,
             company,
             copyright,

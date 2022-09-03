@@ -33,11 +33,11 @@ services:
             - ./docker-data/mongodb:/data/db
         ports:
             - '27017:27017'
-    mezmerizxd-server:
+    another-express-boilerplate:
         build:
             context: .
             dockerfile: local.Dockerfile
-        container_name: 'mezmerizxd-server'
+        container_name: 'another-express-boilerplate'
         volumes:
             - .:/usr/src/app/
         working_dir: /usr/src/app
